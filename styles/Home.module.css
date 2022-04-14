@@ -1,5 +1,20 @@
 .container {
-  padding: 0 2rem;
+  min-height: 60px;
+  background-color: #0070f3;
+  width: 60%;
+}
+
+.timeLineContainer {
+  background-color: aqua;
+  max-width: max-content;
+  display: flex;
+}
+
+.timeLine {
+  min-width: 50px;
+  background-color: black;
+  min-height: 60px;
+  position: relative;
 }
 
 .main {
@@ -12,6 +27,27 @@
   align-items: center;
 }
 
+.leftDragContainer {
+  background-color: transparent;
+  min-width: fit-content;
+
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: 0;
+}
+
+.rightDragContainer {
+  background-color: transparent;
+  min-width: fit-content;
+
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0;
+  background-color: rebeccapurple;
+}
+
 .footer {
   display: flex;
   flex: 1;
@@ -20,7 +56,14 @@
   justify-content: center;
   align-items: center;
 }
-
+.leftDrag {
+  background-color: transparent;
+  min-width: 50px;
+  min-height: 60px;
+  position: absolute;
+  right: 0;
+  cursor: col-resize;
+}
 .footer a {
   display: flex;
   justify-content: center;
