@@ -21,8 +21,8 @@ export default function Months({ monthView, currentMonth, selectedYear }) {
   return (
     <>
       {!monthView
-        ? months.map((e) => (
-            <div>
+        ? months.map((e, i) => (
+            <div key={i}>
               <p>{e}</p>
             </div>
           ))
