@@ -1,44 +1,64 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { months, daysInMonth, pad } from "../utils";
 
-export default function Months() {
+export default function Months({ monthView, currentMonth, selectedYear }) {
+  useEffect(() => {
+    const date = new Date();
+    console.log(
+      date.getMonth() + 1,
+      date.getDay() + 1,
+      date.getFullYear(),
+      currentMonth,
+      selectedYear,
+
+      daysInMonth(months.indexOf(currentMonth) + 1, selectedYear),
+      new Date(
+        `${months.indexOf(currentMonth) + 1}/1/${selectedYear}`
+      ).toLocaleString("en-US", { weekday: "short" }),
+      months.indexOf(currentMonth) + 1
+    );
+  }, []);
   return (
-    <div>
-      <div>
-        <p>Jan</p>
-      </div>
-      <div>
-        <p>Feb</p>
-      </div>
-      <div>
-        <p>Mar</p>
-      </div>
-      <div>
-        <p>Apr</p>
-      </div>
-      <div>
-        <p>May</p>
-      </div>
-      <div>
-        <p>Jun</p>
-      </div>
-      <div>
-        <p>Jul</p>
-      </div>
-      <div>
-        <p>Aug</p>
-      </div>
-      <div>
-        <p>Sep</p>
-      </div>
-      <div>
-        <p>Oct</p>
-      </div>
-      <div>
-        <p>Nov</p>
-      </div>
-      <div>
-        <p>Dec</p>
-      </div>
-    </div>
+    <>
+      {!monthView
+        ? months.map((e) => (
+            <div>
+              <p>{e}</p>
+            </div>
+          ))
+        : "."
+            .repeat(daysInMonth(months.indexOf(currentMonth) + 1, selectedYear))
+            .split("")
+            .map((e, i) => {
+              return (
+                <div
+                  key={i}
+                  style={{
+                    minWidth: `${
+                      100 /
+                        daysInMonth(
+                          months.indexOf(currentMonth) + 1,
+                          selectedYear
+                        ) -
+                      0.5
+                    }%`,
+                  }}
+                >
+                  <div>
+                    <p>
+                      {new Date(
+                        `${months.indexOf(currentMonth) + 1}/${
+                          i + 1
+                        }/${selectedYear}`
+                      ).toLocaleString("en-US", { weekday: "short" })}
+                    </p>
+                  </div>
+                  <div>
+                    <p>{(i + 1).toString().length < 2 ? `0${i + 1}` : i + 1}</p>
+                  </div>
+                </div>
+              );
+            })}
+    </>
   );
 }

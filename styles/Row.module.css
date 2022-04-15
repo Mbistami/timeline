@@ -10,10 +10,9 @@
 
 .timeLine {
   min-width: 50px;
-  background-color: black;
+  background-color: #d6f2e9;
   min-height: 45px;
   position: relative;
-  opacity: 0.5;
 }
 
 .leftDragContainer {
@@ -26,7 +25,7 @@
   right: 0;
 }
 .container:nth-child(odd) {
-  background-color: #e9e6e6e3;
+  background-color: #f3f3f3;
 }
 
 .rightDragContainer {
