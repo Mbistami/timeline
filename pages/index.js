@@ -2,65 +2,117 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { motion, useMotionValue } from "framer-motion";
-import { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef } from "react";
+import Row from "../components/Row";
+import { Menu } from "@mui/material";
+import Dropdown from "../components/Dropdown";
+import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
 
 export default function Home() {
-  const mWidth = useMotionValue(200);
-  const leftRef = useRef(null);
-  const rigthRef = useRef(null);
-  const [isLeft, setIsLeft] = useState(false);
-  const handleClick_Resize = (e, info) => {
-    mWidth.set(mWidth.get() + info.delta.x);
+  const [isDown, setIsDown] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-  const handleLeftClick = (e, info) => {
-    mWidth.set(mWidth.get() - info.delta.x);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
   return (
     <div>
-      <div className={styles.container}>
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: "-50%" }}
-          style={{
-            display: "flex",
-            width: "fit-content",
-            position: isLeft ? "relative" : "relative",
-          }}
-        >
-          <div style={{ position: "relative" }}>
-            <motion.div className={styles.timeLine} style={{ width: mWidth }}>
-              <div
-                className={styles.leftDragContainer}
-                ref={leftRef}
-                onMouseEnter={() => setIsLeft(false)}
-              >
-                <motion.div
-                  className={styles.leftDrag}
-                  drag="x"
-                  style={{ maxWidth: 20, width: 20 }}
-                  dragConstraints={leftRef}
-                  onDrag={handleClick_Resize}
-                  dragElastic={0}
-                />
+      <div className={styles.mainContainer}>
+        <div className={styles.topSide}>
+          <div className={styles.topSideControls}>
+            <div>
+              <Dropdown
+                dropdownText="Year"
+                showIcon
+                handleClick={handleClick}
+                open={open}
+              />
+            </div>
+            <div className={styles.navigationButton}>
+              <div style={{ cursor: "pointer" }}>
+                <ArrowBackIos fontSize="10px" />
               </div>
-              <div
-                className={styles.rightDragContainer}
-                ref={rigthRef}
-                onMouseEnter={() => setIsLeft(true)}
-              >
-                <motion.div
-                  className={styles.leftDrag}
-                  drag="x"
-                  style={{ maxWidth: 20, width: 20 }}
-                  dragConstraints={rigthRef}
-                  onDrag={handleLeftClick}
-                  dragElastic={0}
-                  onDragEnd={() => setIsLeft(false)}
-                />
+              <div>
+                <p className={styles.navigationButtonText}>2022</p>
               </div>
-            </motion.div>
+              <div style={{ cursor: "pointer" }}>
+                <ArrowForwardIos fontSize="10px" />
+              </div>
+            </div>
+            <div style={{ width: "20%" }}>
+              <Dropdown dropdownText="Project Modules (Default)" />
+            </div>
+            <div className={styles.topSideButton}>Save</div>
           </div>
-        </motion.div>
+          <div style={{ alignItems: "center", display: "flex" }}>
+            <Dropdown dropdownText="Timelines" variant="green" />
+          </div>
+        </div>
+        <div className={styles.bottomSide}>
+          <div className={styles.innerLeftSide}>
+            <p>test</p>
+          </div>
+          <div className={styles.innerRightSide}>
+            <div className={styles.innerHeaderYear}>
+              <p>2022</p>
+            </div>
+            <div className={styles.innerHeaderMonths}>
+              <div>
+                <p>Jan</p>
+              </div>
+              <div>
+                <p>Feb</p>
+              </div>
+              <div>
+                <p>Mar</p>
+              </div>
+              <div>
+                <p>Apr</p>
+              </div>
+              <div>
+                <p>May</p>
+              </div>
+              <div>
+                <p>Jun</p>
+              </div>
+              <div>
+                <p>Jul</p>
+              </div>
+              <div>
+                <p>Aug</p>
+              </div>
+              <div>
+                <p>Sep</p>
+              </div>
+              <div>
+                <p>Oct</p>
+              </div>
+              <div>
+                <p>Nov</p>
+              </div>
+              <div>
+                <p>Dec</p>
+              </div>
+            </div>
+            <div
+              style={{ display: "flex", gap: "5px", flexDirection: "column" }}
+              className={styles.rows}
+            >
+              {"."
+                .repeat(11)
+                .split("")
+                .map((dot, index) => (
+                  <Row key={index} />
+                ))}
+            </div>
+          </div>
+        </div>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <p>TEXT</p>
+        </Menu>
       </div>
     </div>
   );
