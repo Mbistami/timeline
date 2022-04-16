@@ -51,10 +51,10 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
         firstMonth
       );
       if (currentMonth == firstMonth) {
-        if (mWidth.get() <= 30)
+        if (mWidth.get() <= 250)
           setYearView({ w: yearView.w - col, xV: yearView.xV + col });
       } else if (currentMonth == secondMonth) {
-        if (mWidth.get() <= 30)
+        if (mWidth.get() <= 250)
           setYearView({ w: yearView.w - col - 5, xV: yearView.xV });
       }
     }
