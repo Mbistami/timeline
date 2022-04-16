@@ -50,11 +50,11 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
     setPrcF(((xV - numberSpacesX) / col) % 1);
     setFirstMonth(months[firstMonth - 1 < 0 ? 0 : firstMonth - 1]);
     setSecondMonth(months[lastMonth - 1]);
-    setYearView({ w, xV });
+    if (!isMonth) setYearView({ w, xV });
   };
   useEffect(() => {
-    console.log(currentMonth, firstMonth, secondMonth);
-    if (isMonthIncluded(currentMonth, firstMonth, secondMonth)) {
+    console.log(currentMonth, firstMonth, secondMonth, isMonth);
+    if (isMonth && isMonthIncluded(currentMonth, firstMonth, secondMonth)) {
       console.log(currentMonth == secondMonth);
       if (currentMonth == firstMonth) {
         if (prcF > 0.06) x.set(container.current.offsetWidth * prcF);
@@ -83,6 +83,7 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
       mWidth.set(0);
     }
     if (!isMonth && yearView?.xV) {
+      console.log("-----------------", yearView.xV);
       x.set(yearView.xV);
       mWidth.set(yearView.w);
     }
