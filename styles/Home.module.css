@@ -164,6 +164,9 @@
 .searchTool > input:focus {
   outline: none;
 }
+.rows {
+  overflow: hidden;
+}
 .searchTool > input {
   border: none;
   height: 100%;

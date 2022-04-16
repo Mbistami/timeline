@@ -24,29 +24,118 @@ const Row = ({ currentMonth, currentYear, isMonth }) => {
     x.set(x.get() + info.delta.x);
   };
   const getSelected = () => {
+    const nm_spaces = 5 * months.indexOf(currentMonth);
+    const nm_months = 107 * months.indexOf(currentMonth);
     console.log(x.get() / 107, mWidth.get() / 107);
-    const selectedMonths = [];
-    "."
-      .repeat(Math.ceil(mWidth.get() / 107))
-      .split("")
-      .map((e, i) => {
-        console.log((mWidth.get() / 107) % 1, mWidth.get() / 107, i);
-        selectedMonths.push(months[Math.floor(x.get() / 107) + i]);
+    if (!isMonth) {
+      const selectedMonths = [];
+      const xPos = x.get() / 107;
+      "."
+        .repeat(Math.ceil(mWidth.get() / 107))
+        .split("")
+        .map((e, i) => {
+          console.log(
+            (mWidth.get() / 107) % 1,
+            mWidth.get() / 107,
+            (xPos + mWidth.get() / 107 + 0.1) % 1,
+            Math.floor(xPos + mWidth.get() / 107 + 0.1),
+            Math.ceil(mWidth.get() / 107) - 1,
+            i
+          );
+          if (i == 0) {
+            console.log("PUSHING", i, Math.floor(x.get() / 107) + i);
+            selectedMonths.push(months[Math.floor(x.get() / 107) + i]);
+          }
+          if (i == Math.ceil(mWidth.get() / 107) - 1) {
+            console.log(
+              "PUSHING",
+              i,
+              xPos + ((mWidth.get() / 107 + 0.1) % 1) < 0.2,
+              (xPos + mWidth.get()) / 107 + 0.1,
+              xPos + mWidth.get() / 107 + 0.1
+            );
+            selectedMonths.push(
+              months[
+                (mWidth.get() / 107 + 0.1) % 1 < 0.4
+                  ? Math.floor(mWidth.get() / 107) - 1
+                  : Math.ceil(mWidth.get() / 107) - 1
+              ]
+            );
+          } else {
+            console.log("PUSHING", i);
+            selectedMonths.push(months[Math.ceil(x.get() / 107) + i]);
+          }
+        });
+      const total = mWidth.get() + x.get();
+      console.log(
+        [...new Set(selectedMonths)],
+        {
+          first: ((x.get() / 107) % 1) * 100,
+          last:
+            (((total - Math.floor(mWidth.get() / 107) * 5) / 107) % 1) * 100,
+        },
+        Math.floor(mWidth.get() / 107),
+        mWidth.get() + x.get() - (Math.floor(mWidth.get() / 107) - 1) * 5
+      );
+      setHandleLastFirst({
+        first: ((x.get() / 107) % 1) * 100,
+        last:
+          (((mWidth.get() +
+            x.get() -
+            (Math.floor(mWidth.get() / 107) - 1) * 5) /
+            107) %
+            1) *
+          100,
       });
+      setSelectedMonths([...new Set(selectedMonths)]);
+    } else {
+      setSelectedMonths([...currentMonth]);
 
-    setHandleLastFirst({
-      first: ((x.get() / 107) % 1) * 100,
-      last: ((mWidth.get() / 107) % 1) * 100,
-    });
-    setSelectedMonths(selectedMonths);
+      const containerWidth = (x.get() / container.current.offsetWidth) * 100;
+      const cn = (107 / 100) * containerWidth;
+
+      beforeChange.x = nm_spaces + nm_months + cn;
+      beforeChange.width = nm_months - beforeChange.x;
+    }
   };
   useEffect(() => {
     if (isMonth) {
+      console.log(currentMonth);
       if (!beforeChange.x)
         setBeforeChange({ x: x.get(), mWidth: mWidth.get() });
       if (selectedMonths.includes(currentMonth)) {
-        x.set(0);
-        mWidth.set(container.current.offsetWidth);
+        if (
+          selectedMonths.indexOf(currentMonth) == 0 ||
+          selectedMonths.indexOf(currentMonth) == selectedMonths.length - 1
+        ) {
+          if (selectedMonths.indexOf(currentMonth) == 0) {
+            console.log(
+              (container.current.offsetWidth / 100) * handleLastFirst.first,
+              handleLastFirst
+            );
+            x.set(
+              (container.current.offsetWidth / 100) * handleLastFirst.first
+            );
+            mWidth.set(
+              (container.current.offsetWidth / 100) *
+                (100 - handleLastFirst.first)
+            );
+            console.log(
+              "---->",
+              (container.current.offsetWidth / 100) *
+                (100 - handleLastFirst.first),
+              (container.current.offsetWidth / 100) * handleLastFirst.first
+            );
+          } else {
+            x.set(0);
+            mWidth.set(
+              (container.current.offsetWidth / 100) * handleLastFirst.last
+            );
+          }
+        } else {
+          x.set(0);
+          mWidth.set(container.current.offsetWidth);
+        }
         console.log(selectedMonths, currentMonth);
       } else {
         x.set(0);
@@ -56,6 +145,7 @@ const Row = ({ currentMonth, currentYear, isMonth }) => {
       x.set(beforeChange.x);
       mWidth.set(beforeChange.mWidth);
       setBeforeChange({});
+      getSelected();
     }
   }, [isMonth]);
   useEffect(() => {
