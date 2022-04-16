@@ -31,7 +31,7 @@ const Row = ({ currentMonth, currentYear, isMonth }) => {
       .split("")
       .map((e, i) => {
         console.log((mWidth.get() / 107) % 1, mWidth.get() / 107, i);
-        selectedMonths.push(months[Math.ceil(x.get() / 107) + i]);
+        selectedMonths.push(months[x.get() / 107 + i]);
       });
 
     setHandleLastFirst({
