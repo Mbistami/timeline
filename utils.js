@@ -45,3 +45,7 @@ export const isMonthIncluded = (m, f, l) => {
     return true;
   return false;
 };
+
+export const getRandomArbitrary = (min, max) => {
+  return Math.random() * (max - min) + min;
+};

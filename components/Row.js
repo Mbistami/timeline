@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Row.module.css";
 import { motion, useMotionValue } from "framer-motion";
-import { months, isMonthIncluded } from "../utils";
+import { months, isMonthIncluded, getRandomArbitrary } from "../utils";
 
 const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
-  const mWidth = useMotionValue(200);
-  const x = useMotionValue(0);
+  const mWidth = useMotionValue(getRandomArbitrary(200, 500));
+  const x = useMotionValue(getRandomArbitrary(100, 900));
   const leftRef = useRef(null);
   const rigthRef = useRef(null);
   const container = useRef(null);
@@ -24,33 +24,40 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
   const getSelected = () => {
     const xV = x.get();
     const w = mWidth.get();
-    console.log(colWidth);
     const col = colWidth;
     const numberSpacesX = (parseInt(xV / col) - 1) * 5;
     const numberSpacesTotal = (parseInt((xV + w) / col) - 1) * 5;
-    const firstMonth =
-      ((xV - numberSpacesX) / col) % 1 > 0.06
-        ? Math.ceil((xV - numberSpacesX) / col)
-        : Math.floor((xV - numberSpacesX) / col);
-    const lastMonth =
-      ((xV + w - numberSpacesTotal) / col) % 1 > 0.06
-        ? Math.ceil((xV + w - numberSpacesTotal) / col)
-        : Math.floor((xV + w - numberSpacesTotal) / col);
-    console.log(
-      ((xV - numberSpacesX) / col).toFixed(2),
-      mWidth.get(),
-      Math.ceil(((xV - numberSpacesX) / col).toFixed(2)),
-      firstMonth,
-      months[firstMonth - 1],
-      parseInt((xV + w) / col) - 1,
-      ((xV + w - numberSpacesTotal) / col) % 1,
-      months[lastMonth - 1]
-    );
-    setPrcL(((xV + w - numberSpacesTotal) / col) % 1);
-    setPrcF(((xV - numberSpacesX) / col) % 1);
-    setFirstMonth(months[firstMonth - 1 < 0 ? 0 : firstMonth - 1]);
-    setSecondMonth(months[lastMonth - 1]);
-    if (!isMonth) setYearView({ w, xV });
+    if (!isMonth) {
+      const firstMonth =
+        ((xV - numberSpacesX) / col) % 1 > 0.06
+          ? Math.ceil((xV - numberSpacesX) / col)
+          : Math.floor((xV - numberSpacesX) / col);
+      const lastMonth =
+        ((xV + w - numberSpacesTotal) / col) % 1 > 0.06
+          ? Math.ceil((xV + w - numberSpacesTotal) / col)
+          : Math.floor((xV + w - numberSpacesTotal) / col);
+      setPrcL(((xV + w - numberSpacesTotal) / col) % 1);
+      setPrcF(((xV - numberSpacesX) / col) % 1);
+      setFirstMonth(months[firstMonth - 1 < 0 ? 0 : firstMonth - 1]);
+      setSecondMonth(months[lastMonth - 1]);
+      if (!isMonth) setYearView({ w, xV });
+    } else if (isMonth) {
+      console.log(
+        "===========",
+        currentMonth == firstMonth,
+        currentMonth == secondMonth,
+        mWidth.get() <= 30,
+        currentMonth,
+        firstMonth
+      );
+      if (currentMonth == firstMonth) {
+        if (mWidth.get() <= 30)
+          setYearView({ w: yearView.w - col, xV: yearView.xV + col });
+      } else if (currentMonth == secondMonth) {
+        if (mWidth.get() <= 30)
+          setYearView({ w: yearView.w - col - 5, xV: yearView.xV });
+      }
+    }
   };
   useEffect(() => {
     console.log(currentMonth, firstMonth, secondMonth, isMonth);
@@ -79,13 +86,12 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
         x.set(0);
         mWidth.set(container.current.offsetWidth);
       }
-    } else {
-      mWidth.set(0);
     }
     if (!isMonth && yearView?.xV) {
       console.log("-----------------", yearView.xV);
       x.set(yearView.xV);
       mWidth.set(yearView.w);
+      // getSelected();
     }
   }, [isMonth, currentMonth]);
   return (
