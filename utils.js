@@ -23,3 +23,25 @@ export const pad = (num, places) => {
   console.log(numZeroes, "0" + num);
   return num;
 };
+export const isMonthIncluded = (m, f, l) => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  if (
+    months.indexOf(m) >= months.indexOf(f) &&
+    months.indexOf(m) <= months.indexOf(l)
+  )
+    return true;
+  return false;
+};
