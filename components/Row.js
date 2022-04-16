@@ -90,7 +90,7 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
       console.log("-----------------", yearView.xV);
       x.set(yearView.xV);
       mWidth.set(yearView.w);
-      // getSelected();
+      getSelected();
     }
   }, [isMonth, currentMonth]);
   return (
