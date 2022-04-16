@@ -4,8 +4,8 @@ import { motion, useMotionValue } from "framer-motion";
 import { months, isMonthIncluded, getRandomArbitrary } from "../utils";
 
 const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
-  const mWidth = useMotionValue(getRandomArbitrary(200, 500));
-  const x = useMotionValue(getRandomArbitrary(100, 900));
+  const mWidth = useMotionValue(0);
+  const x = useMotionValue(0);
   const leftRef = useRef(null);
   const rigthRef = useRef(null);
   const container = useRef(null);
@@ -60,7 +60,6 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
     }
   };
   useEffect(() => {
-    console.log(currentMonth, firstMonth, secondMonth, isMonth);
     if (isMonth && isMonthIncluded(currentMonth, firstMonth, secondMonth)) {
       console.log(currentMonth == secondMonth);
       if (currentMonth == firstMonth) {
@@ -86,7 +85,7 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
         x.set(0);
         mWidth.set(container.current.offsetWidth);
       }
-    }
+    } else mWidth.set(0);
     if (!isMonth && yearView?.xV) {
       console.log("-----------------", yearView.xV);
       x.set(yearView.xV);
