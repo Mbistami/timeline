@@ -9,6 +9,7 @@ import { mergeStyles, months } from "../utils";
 
 export default function Home() {
   const [isMonth, setIsMonth] = useState(false);
+  const [width, setWidth] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [currentSelected, setCurrentSelected] = React.useState(
     new Date().getFullYear()
@@ -104,6 +105,7 @@ export default function Home() {
                 currentMonth={currentMonth}
                 selectedYear={currentSelected}
                 monthView={isMonth}
+                setWidth={setWidth}
                 days={30}
               />
             </div>
@@ -119,6 +121,7 @@ export default function Home() {
                     currentMonth={currentMonth}
                     currentYear={currentSelected}
                     isMonth={isMonth}
+                    colWidth={width}
                     key={index}
                   />
                 ))}

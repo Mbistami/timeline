@@ -1,7 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { months, daysInMonth, pad } from "../utils";
 
-export default function Months({ monthView, currentMonth, selectedYear }) {
+export default function Months({
+  monthView,
+  currentMonth,
+  selectedYear,
+  setWidth,
+}) {
+  const colRef = useRef(null);
   useEffect(() => {
     const date = new Date();
     console.log(
@@ -17,12 +23,13 @@ export default function Months({ monthView, currentMonth, selectedYear }) {
       ).toLocaleString("en-US", { weekday: "short" }),
       months.indexOf(currentMonth) + 1
     );
+    setWidth(colRef.current.offsetWidth);
   }, []);
   return (
     <>
       {!monthView
         ? months.map((e, i) => (
-            <div key={i}>
+            <div key={i} ref={colRef}>
               <p>{e}</p>
             </div>
           ))

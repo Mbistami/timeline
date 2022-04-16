@@ -3,7 +3,7 @@ import styles from "../styles/Row.module.css";
 import { motion, useMotionValue } from "framer-motion";
 import { months, isMonthIncluded } from "../utils";
 
-const Row = ({ currentMonth, currentYear, isMonth }) => {
+const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
   const mWidth = useMotionValue(200);
   const x = useMotionValue(0);
   const leftRef = useRef(null);
@@ -23,7 +23,8 @@ const Row = ({ currentMonth, currentYear, isMonth }) => {
   const getSelected = () => {
     const xV = x.get();
     const w = mWidth.get();
-    const col = 107;
+    console.log(colWidth);
+    const col = colWidth;
     const numberSpacesX = (parseInt(xV / col) - 1) * 5;
     const numberSpacesTotal = (parseInt((xV + w) / col) - 1) * 5;
     const firstMonth =
@@ -51,16 +52,26 @@ const Row = ({ currentMonth, currentYear, isMonth }) => {
   };
   useEffect(() => {
     if (isMonthIncluded(currentMonth, firstMonth, secondMonth)) {
+      console.log(currentMonth == secondMonth);
       if (currentMonth == firstMonth) {
         if (prcF > 0.06) x.set(container.current.offsetWidth * prcF);
         else x.set(0);
         if (months.indexOf(currentMonth) < months.indexOf(secondMonth)) {
           mWidth.set(container.current.offsetWidth);
         } else if (currentMonth == secondMonth)
-          mWidth.set(container.current.offsetWidth * prcL);
+          if (prcL > 0.06) mWidth.set(container.current.offsetWidth * prcL);
+          else
+            mWidth.set(
+              container.current.offsetWidth -
+                container.current.offsetWidth * prcL
+            );
       } else if (currentMonth == secondMonth) {
         x.set(0);
-        mWidth.set(container.current.offsetWidth * prcL);
+        if (prcL > 0.06) mWidth.set(container.current.offsetWidth * prcL);
+        else
+          mWidth.set(
+            container.current.offsetWidth - container.current.offsetWidth * prcL
+          );
       } else {
         x.set(0);
         mWidth.set(container.current.offsetWidth);
