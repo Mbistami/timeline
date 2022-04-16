@@ -8,7 +8,6 @@ import Months from "../components/Months";
 import { mergeStyles, months } from "../utils";
 
 export default function Home() {
-  const [isDown, setIsDown] = useState(false);
   const [isMonth, setIsMonth] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [currentSelected, setCurrentSelected] = React.useState(
@@ -116,7 +115,12 @@ export default function Home() {
                 .repeat(11)
                 .split("")
                 .map((dot, index) => (
-                  <Row key={index} />
+                  <Row
+                    currentMonth={currentMonth}
+                    currentYear={currentSelected}
+                    isMonth={isMonth}
+                    key={index}
+                  />
                 ))}
             </div>
           </div>
