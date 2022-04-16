@@ -13,6 +13,7 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
   const [prcF, setPrcF] = useState(null);
   const [prcL, setPrcL] = useState(null);
   const [secondMonth, setSecondMonth] = useState(null);
+  const [yearView, setYearView] = useState(null);
   const handleClick_Resize = (e, info) => {
     mWidth.set(mWidth.get() + info.delta.x);
   };
@@ -49,8 +50,10 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
     setPrcF(((xV - numberSpacesX) / col) % 1);
     setFirstMonth(months[firstMonth - 1 < 0 ? 0 : firstMonth - 1]);
     setSecondMonth(months[lastMonth - 1]);
+    setYearView({ w, xV });
   };
   useEffect(() => {
+    console.log(currentMonth, firstMonth, secondMonth);
     if (isMonthIncluded(currentMonth, firstMonth, secondMonth)) {
       console.log(currentMonth == secondMonth);
       if (currentMonth == firstMonth) {
@@ -78,6 +81,10 @@ const Row = ({ currentMonth, currentYear, isMonth, colWidth }) => {
       }
     } else {
       mWidth.set(0);
+    }
+    if (!isMonth && yearView?.xV) {
+      x.set(yearView.xV);
+      mWidth.set(yearView.w);
     }
   }, [isMonth, currentMonth]);
   return (
