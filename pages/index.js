@@ -75,7 +75,7 @@ export default function Home() {
         <div className={styles.bottomSide}>
           <div className={styles.innerLeftSide}>
             <div className={styles.innerLeftHeader}>
-              <p>Taks</p>
+              <p>Tasks</p>
             </div>
             <div className={styles.searchContainerTool}>
               <div className={styles.searchTool}>
