@@ -169,6 +169,29 @@
   font-size: 14px;
 }
 
+.progBar {
+  width: 100%;
+  height: 7px;
+  background-color: #e3e3e3;
+  border-radius: 15px;
+  position: relative;
+}
+
+.progBarFiller {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  background-color: #00af79;
+  border-radius: 15px;
+}
+
+.taskItem > p{
+  margin: 0;
+  padding: 10px;
+  padding-right: 0;
+  padding-left: 30px;
+}
+
 .innerHeaderSecondView {
   display: flex;
   flex-direction: row;

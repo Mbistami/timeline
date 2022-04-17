@@ -49,3 +49,20 @@ export const isMonthIncluded = (m, f, l) => {
 export const getRandomArbitrary = (min, max) => {
   return Math.random() * (max - min) + min;
 };
+
+export const tasks = () => {
+  const tasks_ = [
+    "POP readiness",
+    "POP installation",
+    "New Pole installation",
+    "Aerial Cabling",
+    "Manhole installation",
+    "UG Cabling",
+    "Route marker installation",
+    "POP readiness",
+    "POP readiness",
+    "POP readiness",
+    "POP readiness",
+  ];
+  return tasks_;
+};

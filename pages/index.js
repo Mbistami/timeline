@@ -5,7 +5,7 @@ import { Menu, MenuItem } from "@mui/material";
 import Dropdown from "../components/Dropdown";
 import { ArrowForwardIos, ArrowBackIos, Search } from "@mui/icons-material";
 import Months from "../components/Months";
-import { mergeStyles, months } from "../utils";
+import { mergeStyles, months, tasks } from "../utils";
 
 export default function Home() {
   const [isMonth, setIsMonth] = useState(false);
@@ -100,6 +100,28 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              {tasks().map((e, i) => {
+                return (
+                  <div className={styles.taskItem} key={i}>
+                    <p>{e}</p>
+                    <div className={styles.progBar}>
+                      <div
+                        className={styles.progBarFiller}
+                        style={{
+                          width:
+                            i == 0
+                              ? "80%"
+                              : i == 3
+                              ? "35%"
+                              : i == 7
+                              ? "50%"
+                              : 0,
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <div className={styles.innerRightSide}>
               <div className={styles.innerHeaderYear}>
