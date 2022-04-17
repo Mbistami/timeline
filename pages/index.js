@@ -38,122 +38,138 @@ export default function Home() {
       : setCurrentMonth(months[months.indexOf(currentMonth) - 1]);
   };
   return (
-    <div>
-      <div className={styles.mainContainer}>
-        <div className={styles.topSide}>
-          <div className={styles.topSideControls}>
-            <div>
-              <Dropdown
-                dropdownText={isMonth ? "Month" : "Year"}
-                showIcon
-                handleClick={handleClick}
-                open={open}
-              />
-            </div>
-            <div className={styles.navigationButton}>
-              <div style={{ cursor: "pointer" }} onClick={handleBackClick}>
-                <ArrowBackIos fontSize="10px" />
-              </div>
-              <div>
-                <p className={styles.navigationButtonText}>
-                  {!isMonth ? currentSelected : currentMonth}
-                </p>
-              </div>
-              <div style={{ cursor: "pointer" }} onClick={handleForwardClick}>
-                <ArrowForwardIos fontSize="10px" />
-              </div>
-            </div>
-            <div style={{ width: "20%" }}>
-              <Dropdown dropdownText="Project Modules (Default)" />
-            </div>
-            <div className={styles.topSideButton}>Save</div>
-          </div>
-          <div style={{ alignItems: "center", display: "flex" }}>
-            <Dropdown dropdownText="Timelines" variant="green" />
-          </div>
+    <div className={styles.mainContainer_}>
+      <div className={styles.leftNavigation}>
+        <div className={styles.logo}>
+          <p>Tracit</p>
         </div>
-        <div className={styles.bottomSide}>
-          <div className={styles.innerLeftSide}>
-            <div className={styles.innerLeftHeader}>
-              <p>Tasks</p>
+        <div className={mergeStyles([styles.navCircle, styles.navActive])}>
+          <p>TS</p>
+        </div>
+        <div className={styles.navCircle}>
+          <p>RE</p>
+        </div>
+      </div>
+      <div style={{ width: "100%" }}>
+        <div className={styles.topNavbar}>
+          <p>TN State Optic Fibre Project</p>
+        </div>
+        <div className={styles.mainContainer}>
+          <div className={styles.topSide}>
+            <div className={styles.topSideControls}>
+              <div>
+                <Dropdown
+                  dropdownText={isMonth ? "Month" : "Year"}
+                  showIcon
+                  handleClick={handleClick}
+                  open={open}
+                />
+              </div>
+              <div className={styles.navigationButton}>
+                <div style={{ cursor: "pointer" }} onClick={handleBackClick}>
+                  <ArrowBackIos fontSize="10px" />
+                </div>
+                <div>
+                  <p className={styles.navigationButtonText}>
+                    {!isMonth ? currentSelected : currentMonth}
+                  </p>
+                </div>
+                <div style={{ cursor: "pointer" }} onClick={handleForwardClick}>
+                  <ArrowForwardIos fontSize="10px" />
+                </div>
+              </div>
+              <div style={{ width: "20%" }}>
+                <Dropdown dropdownText="Project Modules (Default)" />
+              </div>
+              <div className={styles.topSideButton}>Save</div>
             </div>
-            <div className={styles.searchContainerTool}>
-              <div className={styles.searchTool}>
-                <input placeholder="Search" />
-                <div className={styles.icon}>
-                  <Search />
+            <div style={{ alignItems: "center", display: "flex" }}>
+              <Dropdown dropdownText="Timelines" variant="green" />
+            </div>
+          </div>
+          <div className={styles.bottomSide}>
+            <div className={styles.innerLeftSide}>
+              <div className={styles.innerLeftHeader}>
+                <p>Tasks</p>
+              </div>
+              <div className={styles.searchContainerTool}>
+                <div className={styles.searchTool}>
+                  <input placeholder="Search" />
+                  <div className={styles.icon}>
+                    <Search />
+                  </div>
                 </div>
               </div>
             </div>
+            <div className={styles.innerRightSide}>
+              <div className={styles.innerHeaderYear}>
+                <p>{!isMonth ? currentSelected : currentMonth}</p>
+              </div>
+              <div
+                className={mergeStyles([
+                  !isMonth
+                    ? styles.innerHeaderMonths
+                    : styles.innerHeaderSecondView,
+                  !isMonth ? styles.yearView : styles.monthView,
+                ])}
+                style={
+                  !isMonth ? { minWidth: `8%` } : { minWidth: `${100 / 30}%` }
+                }
+              >
+                <Months
+                  currentMonth={currentMonth}
+                  selectedYear={currentSelected}
+                  monthView={isMonth}
+                  setWidth={setWidth}
+                  days={30}
+                />
+              </div>
+              <div
+                style={{ display: "flex", gap: "5px", flexDirection: "column" }}
+                className={styles.rows}
+              >
+                {"."
+                  .repeat(11)
+                  .split("")
+                  .map((dot, index) => (
+                    <Row
+                      currentMonth={currentMonth}
+                      currentYear={currentSelected}
+                      isMonth={isMonth}
+                      colWidth={width}
+                      key={index}
+                    />
+                  ))}
+              </div>
+            </div>
           </div>
-          <div className={styles.innerRightSide}>
-            <div className={styles.innerHeaderYear}>
-              <p>{!isMonth ? currentSelected : currentMonth}</p>
-            </div>
-            <div
-              className={mergeStyles([
-                !isMonth
-                  ? styles.innerHeaderMonths
-                  : styles.innerHeaderSecondView,
-                !isMonth ? styles.yearView : styles.monthView,
-              ])}
-              style={
-                !isMonth ? { minWidth: `8%` } : { minWidth: `${100 / 30}%` }
-              }
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            <MenuItem
+              selected={isMonth}
+              onClick={() => {
+                setIsMonth(true);
+                handleClose();
+              }}
             >
-              <Months
-                currentMonth={currentMonth}
-                selectedYear={currentSelected}
-                monthView={isMonth}
-                setWidth={setWidth}
-                days={30}
-              />
-            </div>
-            <div
-              style={{ display: "flex", gap: "5px", flexDirection: "column" }}
-              className={styles.rows}
+              Month
+            </MenuItem>
+            <MenuItem
+              selected={!isMonth}
+              onClick={() => {
+                setIsMonth(false);
+                handleClose();
+              }}
             >
-              {"."
-                .repeat(11)
-                .split("")
-                .map((dot, index) => (
-                  <Row
-                    currentMonth={currentMonth}
-                    currentYear={currentSelected}
-                    isMonth={isMonth}
-                    colWidth={width}
-                    key={index}
-                  />
-                ))}
-            </div>
-          </div>
+              Year
+            </MenuItem>
+          </Menu>
         </div>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-        >
-          <MenuItem
-            selected={isMonth}
-            onClick={() => {
-              setIsMonth(true);
-              handleClose();
-            }}
-          >
-            Month
-          </MenuItem>
-          <MenuItem
-            selected={!isMonth}
-            onClick={() => {
-              setIsMonth(false);
-              handleClose();
-            }}
-          >
-            Year
-          </MenuItem>
-        </Menu>
       </div>
     </div>
   );

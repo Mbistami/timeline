@@ -23,6 +23,48 @@
   width: 90%;
 }
 
+.leftNavigation {
+  background-color: #e3e3e3;
+  height: 100vh;
+  width: 70px;
+}
+
+.leftNavigation > div > p {
+  margin: 0;
+}
+
+.navCircle > p {
+  padding: 10px;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.navActive > p {
+  border: 1px solid #00805b;
+  -webkit-box-shadow: 5px 5px 30px -8px rgba(0, 0, 0, 0.67);
+  box-shadow: 5px 5px 30px -8px rgba(0, 0, 0, 0.67);
+}
+
+.leftNavigation > div {
+  padding: 10px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  jusitfy-content: center;
+  margin: 0;
+}
+
+.logo > p {
+  background-color: #00805b;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+}
+
 .menuItemActive {
   background-color: #00805b;
 }
@@ -31,10 +73,26 @@
   background-color: #d6f2e9;
 }
 
+.topNavbar {
+  padding-left: 1%;
+  background-color: #f9f9f9;
+}
+
+.topNavbar > p {
+  margin: 0;
+  padding: 20px;
+  font-size: 14px;
+}
+
 .navigationButton {
   display: flex;
   flex-direction: row;
   padding: 5px;
+}
+
+.mainContainer_ {
+  display: flex;
+  flex-direction: row;
 }
 
 .navigationButton > div {
@@ -47,6 +105,15 @@
   text-align: center;
 }
 
+.leftNavigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  position: relative;
+  min-width: 20px;
+  text-align: center;
+}
 .button:hover {
   cursor: pointer;
 }
@@ -71,7 +138,7 @@
 .innerLeftHeader > p {
   margin: 0;
 }
-.innerLeftHeader{
+.innerLeftHeader {
   background-color: #e3e3e3;
   height: 48px;
   text-align: center;
@@ -122,29 +189,23 @@
   padding: 5px;
 }
 
-.innerHeaderSecondView > div > div > p:nth-child(odd){
+.innerHeaderSecondView > div > div > p:nth-child(odd) {
   font-size: 11px;
 }
-.innerHeaderSecondView > div > div > p:nth-child(even){
+.innerHeaderSecondView > div > div > p:nth-child(even) {
   font-size: 11px;
 }
 
-.innerHeaderSecondView > div > div:nth-child(odd)
-{
+.innerHeaderSecondView > div > div:nth-child(odd) {
   background-color: #d6f2e9;
-
 }
 .innerHeaderSecondView > div > div:nth-child(even) > p {
   font-weight: bold;
 }
-.innerHeaderSecondView > div > div:nth-child(even)
-{
+.innerHeaderSecondView > div > div:nth-child(even) {
   background-color: #ededed;
-
 }
-.innerHeaderSecondView > div > div:nth-child(even)
-{
-  
+.innerHeaderSecondView > div > div:nth-child(even) {
 }
 
 .searchTool > .icon {
