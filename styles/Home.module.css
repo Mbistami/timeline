@@ -187,7 +187,8 @@
 
 .taskItem > p{
   margin: 0;
-  padding: 10px;
+  padding: 9px;
+  padding-bottom: 8px;
   padding-right: 0;
   padding-left: 30px;
 }
@@ -243,7 +244,7 @@
   min-width: 8%;
 }
 .searchContainerTool {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 .searchTool > input:focus {
   outline: none;
@@ -271,6 +272,9 @@
   min-width: 18%;
   padding-left: 10px;
   padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .innerRightSide {
