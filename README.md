@@ -16,5 +16,5 @@ It was a freelance project it was made from scratch for specific user case the c
 ## Screenshots
 
 ![Year view state](./timelime_1.png)
-![Months view state](./timelime_2.png)
+![Months view state](./timeline_2.png)
 ![Added tasks state](./timeline_3.png)
